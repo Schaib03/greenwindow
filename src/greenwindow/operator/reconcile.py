@@ -1,5 +1,3 @@
-"""Decisions made by the operator, kept free of Kubernetes calls so they can be unit tested."""
-
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -61,7 +59,7 @@ def schedule(
 ) -> dict[str, Any]:
     base = {"phase": "Scheduled", "deadline": iso(deadline_at), "lastPlanned": iso(now)}
     if forecast is None:
-        # Never hold a job hostage to a forecast outage: run it now.
+        # fail open: never block a job on a forecast outage
         return {**base, "scheduledFor": iso(now), "reason": "forecast-unavailable"}
 
     result = plan(forecast, now, request.duration, deadline_at, request.max_intensity)

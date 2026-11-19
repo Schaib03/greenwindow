@@ -5,8 +5,7 @@ from datetime import datetime, timedelta
 
 from greenwindow.forecast import Forecast
 
-# Waiting hours for a 1% gain is not worth the latency. Below this relative
-# improvement the job just runs now.
+# not worth waiting hours for a 1% gain
 DEFAULT_MIN_IMPROVEMENT = 0.05
 
 
@@ -48,11 +47,6 @@ def plan(
     max_intensity: float | None = None,
     min_improvement: float = DEFAULT_MIN_IMPROVEMENT,
 ) -> Plan:
-    """Pick the start time with the lowest average intensity over the job's run.
-
-    The job must finish before the deadline. When the forecast does not reach far
-    enough, or nothing is clearly greener, it starts now.
-    """
     run_now_end = now + duration
     if not forecast.covers(now, run_now_end):
         intensity = forecast.intensity_at(now) if forecast.start <= now < forecast.end else 0.0

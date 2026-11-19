@@ -11,8 +11,6 @@ API_URL = "https://api.electricitymap.org/v3/carbon-intensity/forecast"
 
 
 class ElectricityMapsProvider:
-    """Official forecasts for zones covered by an Electricity Maps plan (needs a token)."""
-
     name = "electricitymaps"
 
     def __init__(self, token: str, client: httpx.Client | None = None):

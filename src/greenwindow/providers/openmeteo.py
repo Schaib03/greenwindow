@@ -19,8 +19,6 @@ WIND_SITES = [
 
 
 class OpenMeteoMoroccoProvider:
-    """Estimates Morocco's grid intensity from the Open-Meteo weather forecast (no API key)."""
-
     name = "openmeteo-model"
 
     def __init__(

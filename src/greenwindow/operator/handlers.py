@@ -114,7 +114,7 @@ def _handle_scheduled(spec, status, name, namespace, body, patch):
     try:
         _state["batch"].create_namespaced_job(namespace, manifest)
     except ApiException as exc:
-        # A previous reconcile may have created it before the status patch landed.
+        # already created by a previous reconcile
         if exc.status != 409:
             raise
 

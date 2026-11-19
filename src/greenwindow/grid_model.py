@@ -1,11 +1,6 @@
-"""Rough model of the Moroccan grid's carbon intensity, driven by weather.
+"""Weather-driven estimate of the Moroccan grid's carbon intensity.
 
-There is no free hourly carbon-intensity feed for Morocco, so we estimate it:
-solar output from irradiance at Noor Ouarzazate, wind output from wind speed at
-three large wind farms, a typical daily demand curve, and a merit order where
-coal is must-run and gas fills the rest. Capacities are rounded public figures
-and every parameter can be overridden. It is an estimate, good enough to rank
-hours against each other, not to report emissions.
+Good enough to rank hours against each other, not to report emissions.
 """
 
 from __future__ import annotations
@@ -16,8 +11,7 @@ from datetime import datetime, timedelta
 # Lifecycle emission factors in gCO2eq/kWh (IPCC AR5 medians; solar is a PV/CSP mix).
 EMISSION_FACTORS = {"coal": 820.0, "gas": 490.0, "wind": 11.0, "solar": 40.0, "hydro": 24.0}
 
-# Demand relative to the daily average, by local hour (UTC+1). Low at night,
-# a midday plateau and an evening peak around 20h.
+# relative to the daily average, by local hour (UTC+1)
 DEMAND_PROFILE = [
     0.84, 0.81, 0.79, 0.78, 0.78, 0.80, 0.86, 0.93, 0.99, 1.02, 1.04, 1.05,
     1.05, 1.04, 1.03, 1.02, 1.02, 1.04, 1.10, 1.17, 1.20, 1.16, 1.06, 0.94,
@@ -88,8 +82,7 @@ def dispatch(
     coal = min(max(residual, coal_min), coal_max)
     gas = max(residual - coal, 0.0)
 
-    # Coal cannot go below must-run, so on very sunny and windy hours some
-    # renewable output is curtailed (or exported) instead.
+    # coal stays at must-run, so surplus renewables are curtailed
     surplus = solar + wind + hydro + coal - demand
     if surplus > 0:
         renewables = solar + wind

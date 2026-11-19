@@ -40,7 +40,6 @@ class Forecast:
         return self.points[bisect_right(self._starts, moment) - 1].intensity
 
     def average(self, start: datetime, end: datetime) -> float:
-        """Time-weighted mean intensity over [start, end)."""
         if not self.covers(start, end) or end <= start:
             raise ValueError("window is outside the forecast")
         total = 0.0

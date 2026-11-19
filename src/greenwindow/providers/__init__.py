@@ -20,8 +20,6 @@ class ProviderError(RuntimeError):
 
 
 class CachedProvider:
-    """Forecasts change a few times a day; no need to call the API on every reconcile."""
-
     def __init__(self, inner: Provider, ttl: timedelta = timedelta(minutes=30)):
         self.inner = inner
         self.name = inner.name
