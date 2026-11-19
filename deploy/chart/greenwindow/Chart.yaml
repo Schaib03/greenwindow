@@ -1,0 +1,10 @@
+apiVersion: v2
+name: greenwindow
+description: Carbon-aware scheduling of Kubernetes batch jobs
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+home: https://github.com/Schaib03/greenwindow
+keywords: [kubernetes, operator, carbon-aware, green-software, scheduling]
+maintainers:
+  - name: Saad Chaib

@@ -1,0 +1,78 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  name: carbonawarejobs.greenwindow.io
+spec:
+  group: greenwindow.io
+  scope: Namespaced
+  names:
+    kind: CarbonAwareJob
+    listKind: CarbonAwareJobList
+    plural: carbonawarejobs
+    singular: carbonawarejob
+    shortNames: [cajob]
+  versions:
+    - name: v1alpha1
+      served: true
+      storage: true
+      subresources:
+        status: {}
+      additionalPrinterColumns:
+        - name: Phase
+          type: string
+          jsonPath: .status.phase
+        - name: Start
+          type: string
+          jsonPath: .status.scheduledFor
+        - name: gCO2/kWh
+          type: number
+          jsonPath: .status.plannedIntensity
+        - name: Now
+          type: number
+          jsonPath: .status.intensityIfRunNow
+          priority: 1
+        - name: Avoided (g)
+          type: number
+          jsonPath: .status.estimatedAvoidedGrams
+        - name: Age
+          type: date
+          jsonPath: .metadata.creationTimestamp
+      schema:
+        openAPIV3Schema:
+          type: object
+          required: [spec]
+          properties:
+            spec:
+              type: object
+              required: [jobTemplate]
+              properties:
+                zone:
+                  type: string
+                  default: MA
+                  description: Grid zone used for the forecast.
+                duration:
+                  type: string
+                  default: 30m
+                  pattern: '^(\d+[dhms])+$'
+                  description: Expected run time of the job.
+                deadline:
+                  type: string
+                  default: 6h
+                  pattern: '^(\d+[dhms])+$'
+                  description: The job must finish within this time after creation.
+                powerWatts:
+                  type: integer
+                  minimum: 1
+                  default: 100
+                  description: Average power draw, used to estimate the CO2 avoided.
+                maxIntensity:
+                  type: number
+                  minimum: 0
+                  description: Start immediately if the grid is already below this intensity.
+                jobTemplate:
+                  type: object
+                  description: Same shape as a CronJob's jobTemplate.
+                  x-kubernetes-preserve-unknown-fields: true
+            status:
+              type: object
+              x-kubernetes-preserve-unknown-fields: true

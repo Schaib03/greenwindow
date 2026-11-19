@@ -1,0 +1,12 @@
+{{- if .Values.grafanaDashboard.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "greenwindow.fullname" . }}-dashboard
+  labels:
+    {{- include "greenwindow.labels" . | nindent 4 }}
+    {{- toYaml .Values.grafanaDashboard.labels | nindent 4 }}
+data:
+  greenwindow.json: |-
+    {{- .Files.Get "dashboards/greenwindow.json" | nindent 4 }}
+{{- end }}

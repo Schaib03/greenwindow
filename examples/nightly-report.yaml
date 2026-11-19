@@ -1,0 +1,19 @@
+apiVersion: greenwindow.io/v1alpha1
+kind: CarbonAwareJob
+metadata:
+  name: nightly-report
+spec:
+  zone: MA
+  duration: 45m
+  deadline: 10h
+  powerWatts: 300
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: report
+              image: busybox:1.37
+              command: ["sh", "-c", "echo building the daily report; sleep 30"]

@@ -1,0 +1,51 @@
+image:
+  repository: ghcr.io/schaib03/greenwindow
+  tag: ""
+  pullPolicy: IfNotPresent
+
+# openmeteo: weather-based estimate for Morocco, no key needed.
+# electricitymaps: official forecast, needs a token in electricityMaps.existingSecret.
+# static: fixed values from staticForecast (tests and demos).
+provider: openmeteo
+staticForecast: ""
+electricityMaps:
+  existingSecret: ""
+  secretKey: token
+
+reconcileSeconds: 30
+replanMinutes: 20
+forecastTtlMinutes: 30
+
+resources:
+  requests:
+    cpu: 20m
+    memory: 96Mi
+  limits:
+    memory: 192Mi
+
+metrics:
+  port: 9090
+  serviceMonitor:
+    enabled: false
+    interval: 30s
+    labels: {}
+
+grafanaDashboard:
+  enabled: false
+  labels:
+    grafana_dashboard: "1"
+
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 10001
+  seccompProfile:
+    type: RuntimeDefault
+
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  capabilities:
+    drop: ["ALL"]
+
+nodeSelector: {}
+tolerations: []

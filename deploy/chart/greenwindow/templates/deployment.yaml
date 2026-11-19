@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "greenwindow.fullname" . }}
+  labels:
+    {{- include "greenwindow.labels" . | nindent 4 }}
+spec:
+  # One instance only: two operators would both create the same jobs.
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      {{- include "greenwindow.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "greenwindow.selectorLabels" . | nindent 8 }}
+    spec:
+      serviceAccountName: {{ include "greenwindow.fullname" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: operator
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args:
+            - run
+            - --standalone
+            - --all-namespaces
+            - --liveness=http://0.0.0.0:8080/healthz
+            - -m
+            - greenwindow.operator.handlers
+          env:
+            - name: GREENWINDOW_PROVIDER
+              value: {{ .Values.provider | quote }}
+            - name: GREENWINDOW_STATIC_FORECAST
+              value: {{ .Values.staticForecast | quote }}
+            - name: GREENWINDOW_RECONCILE_SECONDS
+              value: {{ .Values.reconcileSeconds | quote }}
+            - name: GREENWINDOW_REPLAN_MINUTES
+              value: {{ .Values.replanMinutes | quote }}
+            - name: GREENWINDOW_FORECAST_TTL_MINUTES
+              value: {{ .Values.forecastTtlMinutes | quote }}
+            - name: GREENWINDOW_METRICS_PORT
+              value: {{ .Values.metrics.port | quote }}
+            {{- if .Values.electricityMaps.existingSecret }}
+            - name: ELECTRICITYMAPS_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.electricityMaps.existingSecret }}
+                  key: {{ .Values.electricityMaps.secretKey }}
+            {{- end }}
+          ports:
+            - name: health
+              containerPort: 8080
+            - name: metrics
+              containerPort: {{ .Values.metrics.port }}
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: health
+            initialDelaySeconds: 10
+            periodSeconds: 20
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir: {}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
