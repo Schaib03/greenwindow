@@ -6,7 +6,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1
 
 WORKDIR /app
-RUN useradd --uid 10001 --create-home operator
+RUN useradd --uid 10001 --create-home greenwindow
 
 COPY pyproject.toml README.md ./
 COPY src src
