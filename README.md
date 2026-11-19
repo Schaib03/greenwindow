@@ -1,11 +1,11 @@
 # greenwindow
 
+A Kubernetes operator that runs flexible batch jobs when the electricity grid is cleanest.
+
 [![ci](https://github.com/Schaib03/greenwindow/actions/workflows/ci.yml/badge.svg)](https://github.com/Schaib03/greenwindow/actions/workflows/ci.yml)
 ![python](https://img.shields.io/badge/python-3.11-3776AB)
 ![kubernetes](https://img.shields.io/badge/kubernetes-operator-326CE5)
 ![license](https://img.shields.io/badge/license-MIT-green)
-
-**Run Kubernetes batch jobs when the grid is cleanest.**
 
 A nightly report, a model training run or a backup rarely has to start at an exact time:
 it has to be done by some deadline. The same kilowatt-hour can emit very different
