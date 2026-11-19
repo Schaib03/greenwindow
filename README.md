@@ -47,11 +47,13 @@ flowchart LR
 4. When the start time comes, it creates the Job (owned by the `CarbonAwareJob`, so
    deleting one deletes the other) and follows it until it succeeds or fails.
 
+From the end-to-end test in CI, where the static forecast is clean between minutes 4
+and 6 (`-o wide` adds the intensity if it had started immediately):
+
 ```console
-$ kubectl get cajob
-NAME                   PHASE       START                  GCO2/KWH   AVOIDED (G)   AGE
-nightly-report         Scheduled   2026-06-15T11:00:00Z   596.2      193           2m
-churn-model-training   Running     2026-06-14T20:04:11Z   612.0      0             41m
+$ kubectl get cajob demo -o wide
+NAME   PHASE       START                  GCO2/KWH   NOW   AVOIDED (G)   AGE
+demo   Succeeded   2026-11-19T18:03:00Z   150        600   3.8           3m41s
 ```
 
 ## Quick start
