@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "greenwindow"
+version = "0.1.0"
+description = "Carbon-aware scheduling of Kubernetes batch jobs"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+authors = [{ name = "Saad Chaib" }]
+dependencies = [
+    "kopf==1.45.2",
+    "kubernetes==37.0.3",
+    "httpx==0.28.1",
+    "prometheus-client==0.26.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest==9.2.0", "ruff==0.17.6"]
+
+[project.scripts]
+greenwindow = "greenwindow.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
