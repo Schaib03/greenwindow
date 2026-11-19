@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 340" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="12">
+<rect width="100%" height="100%" rx="12" fill="#0d1117"/>
+<text x="64" y="30" fill="#e6edf3" font-size="16" font-weight="600">Morocco grid, 14 Jun 2026: best 3h window for a job submitted at 20:00 UTC</text>
+<line x1="64" x2="876" y1="292.0" y2="292.0" stroke="#30363d" stroke-width="1"/><text x="56" y="296.0" fill="#8b949e" text-anchor="end">550</text>
+<line x1="64" x2="876" y1="213.3" y2="213.3" stroke="#30363d" stroke-width="1"/><text x="56" y="217.3" fill="#8b949e" text-anchor="end">600</text>
+<line x1="64" x2="876" y1="134.7" y2="134.7" stroke="#30363d" stroke-width="1"/><text x="56" y="138.7" fill="#8b949e" text-anchor="end">650</text>
+<line x1="64" x2="876" y1="56.0" y2="56.0" stroke="#30363d" stroke-width="1"/><text x="56" y="60.0" fill="#8b949e" text-anchor="end">700</text>
+<text x="149.5" y="310" fill="#8b949e" text-anchor="middle">21:00</text>
+<text x="277.7" y="310" fill="#8b949e" text-anchor="middle">00:00</text>
+<text x="405.9" y="310" fill="#8b949e" text-anchor="middle">03:00</text>
+<text x="534.1" y="310" fill="#8b949e" text-anchor="middle">06:00</text>
+<text x="662.3" y="310" fill="#8b949e" text-anchor="middle">09:00</text>
+<text x="790.5" y="310" fill="#8b949e" text-anchor="middle">12:00</text>
+<rect x="747.8" y="56" width="128.2" height="236" fill="#2ea043" fill-opacity="0.25" stroke="#2ea043"/><text x="811.9" y="48" fill="#3fb950" text-anchor="middle" font-weight="600">greenest window</text>
+<polygon points="64.0,292.0 64.0,183.9 106.7,183.9 106.7,172.4 149.5,172.4 149.5,140.2 192.2,140.2 192.2,143.2 234.9,143.2 234.9,165.8 277.7,165.8 277.7,168.5 320.4,168.5 320.4,176.0 363.2,176.0 363.2,180.5 405.9,180.5 405.9,194.9 448.6,194.9 448.6,143.2 491.4,143.2 491.4,104.6 534.1,104.6 534.1,67.0 576.8,67.0 576.8,82.7 619.6,82.7 619.6,92.3 662.3,92.3 662.3,122.6 705.1,122.6 705.1,139.9 747.8,139.9 747.8,172.1 790.5,172.1 790.5,229.7 833.3,229.7 833.3,256.3 876.0,256.3 876.0,292.0" fill="#d29922" fill-opacity="0.12"/><polyline points="64.0,183.9 106.7,183.9 106.7,172.4 149.5,172.4 149.5,140.2 192.2,140.2 192.2,143.2 234.9,143.2 234.9,165.8 277.7,165.8 277.7,168.5 320.4,168.5 320.4,176.0 363.2,176.0 363.2,180.5 405.9,180.5 405.9,194.9 448.6,194.9 448.6,143.2 491.4,143.2 491.4,104.6 534.1,104.6 534.1,67.0 576.8,67.0 576.8,82.7 619.6,82.7 619.6,92.3 662.3,92.3 662.3,122.6 705.1,122.6 705.1,139.9 747.8,139.9 747.8,172.1 790.5,172.1 790.5,229.7 833.3,229.7 833.3,256.3 876.0,256.3" fill="none" stroke="#d29922" stroke-width="2"/><line x1="106.7" x2="106.7" y1="56" y2="292" stroke="#58a6ff" stroke-dasharray="4 4"/><text x="110.7" y="286" fill="#58a6ff">now</text><text x="14" y="174.0" fill="#8b949e" transform="rotate(-90 14 174.0)" text-anchor="middle">gCO2eq/kWh</text><text x="876" y="330" fill="#8b949e" text-anchor="end">UTC · source: openmeteo-model</text>
+</svg>
