@@ -20,12 +20,19 @@ dump() {
 }
 trap 'dump' ERR
 
+values=$(mktemp)
+cat > "$values" <<EOF
+image:
+  repository: "${IMAGE%:*}"
+  tag: "${IMAGE##*:}"
+  pullPolicy: Never
+provider: static
+staticForecast: "$FORECAST"
+reconcileSeconds: 5
+EOF
+
 helm upgrade --install greenwindow deploy/chart/greenwindow \
-  --namespace greenwindow --create-namespace \
-  --set image.repository="${IMAGE%:*}" --set image.tag="${IMAGE##*:}" \
-  --set image.pullPolicy=Never \
-  --set provider=static --set-string staticForecast="$FORECAST" \
-  --set reconcileSeconds=5 --wait --timeout 3m
+  --namespace greenwindow --create-namespace -f "$values" --wait --timeout 3m
 
 kubectl create namespace "$NAMESPACE" --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n "$NAMESPACE" apply -f - <<'EOF'

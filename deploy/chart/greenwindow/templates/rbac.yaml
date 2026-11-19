@@ -24,7 +24,7 @@ rules:
   - apiGroups: [batch]
     resources: [jobs/status]
     verbs: [get]
-  - apiGroups: [""]
+  - apiGroups: ["", events.k8s.io]
     resources: [events]
     verbs: [create]
   # kopf discovers resources and namespaces when watching the whole cluster.
